@@ -22,6 +22,7 @@ export const initialPosts: Post[] = [
     category: 'Laundry',
     timestamp: new Date(Date.now() - 1000 * 60 * 5), // 5 minutes ago
     votes: 12,
+    comments: [],
   },
   {
     id: 'post-2',
@@ -31,6 +32,14 @@ export const initialPosts: Post[] = [
     category: 'Mess',
     timestamp: new Date(Date.now() - 1000 * 60 * 45), // 45 minutes ago
     votes: 42,
+    comments: [
+      {
+        id: 'comment-1',
+        author: users[3],
+        content: 'Awesome! Been waiting for Paneer all week.',
+        timestamp: new Date(Date.now() - 1000 * 60 * 40),
+      },
+    ],
   },
   {
     id: 'post-3',
@@ -40,6 +49,7 @@ export const initialPosts: Post[] = [
     category: 'Cafe',
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 hours ago
     votes: 28,
+    comments: [],
   },
   {
     id: 'post-4',
@@ -49,5 +59,6 @@ export const initialPosts: Post[] = [
     category: 'General',
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 8), // 8 hours ago
     votes: 15,
+    comments: [],
   },
 ].sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());

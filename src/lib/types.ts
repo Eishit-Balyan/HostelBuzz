@@ -6,6 +6,13 @@ export type User = {
   avatarUrl: string;
 };
 
+export type Comment = {
+  id: string;
+  author: User;
+  content: string;
+  timestamp: Date;
+};
+
 export type Post = {
   id: string;
   author: User;
@@ -13,4 +20,5 @@ export type Post = {
   category: Category;
   timestamp: Date;
   votes: number;
+  comments: Comment[];
 };

@@ -42,7 +42,7 @@ type PostFormValues = z.infer<typeof postSchema>;
 
 interface NewPostDialogProps {
   onAddPost: (
-    post: Omit<Post, 'id' | 'author' | 'timestamp' | 'votes'>
+    post: Omit<Post, 'id' | 'author' | 'timestamp' | 'votes' | 'comments'>
   ) => void;
 }
 

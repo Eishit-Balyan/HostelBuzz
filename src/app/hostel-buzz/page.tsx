@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { initialPosts } from '@/lib/data';
-import type { Post, Category } from '@/lib/types';
+import type { Post, Category, Comment } from '@/lib/types';
 import HostelBuzzHeader from '@/components/hostel-buzz/header';
 import NewPostDialog from '@/components/hostel-buzz/new-post-dialog';
 import PostCard from '@/components/hostel-buzz/post-card';
@@ -36,7 +36,7 @@ export default function HostelBuzzPage() {
   };
 
   const handleAddPost = (
-    newPost: Omit<Post, 'id' | 'author' | 'timestamp' | 'votes'>
+    newPost: Omit<Post, 'id' | 'author' | 'timestamp' | 'votes' | 'comments'>
   ) => {
     const newUser = {
       id: 'user-5',
@@ -48,6 +48,7 @@ export default function HostelBuzzPage() {
       author: newUser,
       timestamp: new Date(),
       votes: 1,
+      comments: [],
       ...newPost,
     };
     setPosts([post, ...posts].sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime()));
@@ -55,6 +56,36 @@ export default function HostelBuzzPage() {
       title: 'Post created!',
       description: 'Your update is now live on the feed.',
     });
+  };
+
+  const handleReport = (postId: string) => {
+    console.log(`Reported post ${postId}`);
+    toast({
+      title: 'Post Reported',
+      description: 'Thank you for your feedback. We will review this post.',
+    });
+  };
+
+  const handleComment = (postId: string, commentText: string) => {
+    const newUser = {
+      id: 'user-5',
+      name: 'You',
+      avatarUrl: 'https://picsum.photos/seed/you/40/40',
+    };
+    const newComment: Comment = {
+      id: `comment-${Date.now()}`,
+      author: newUser,
+      content: commentText,
+      timestamp: new Date(),
+    };
+    setPosts(
+      posts.map(p => {
+        if (p.id === postId) {
+          return { ...p, comments: [...p.comments, newComment] };
+        }
+        return p;
+      })
+    );
   };
 
   const filteredPosts =
@@ -71,7 +102,13 @@ export default function HostelBuzzPage() {
           {filteredPosts.length > 0 ? (
             <div className="space-y-4">
               {filteredPosts.map(post => (
-                <PostCard key={post.id} post={post} onVote={handleVote} />
+                <PostCard
+                  key={post.id}
+                  post={post}
+                  onVote={handleVote}
+                  onReport={handleReport}
+                  onComment={handleComment}
+                />
               ))}
             </div>
           ) : (
