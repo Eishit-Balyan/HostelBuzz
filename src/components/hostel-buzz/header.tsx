@@ -1,9 +1,10 @@
 'use client';
 
-import { Bell, Wind } from 'lucide-react';
+import { Bell, LogOut, Wind } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import type { Category } from '@/lib/types';
+import { useRouter } from 'next/navigation';
 
 interface HostelBuzzHeaderProps {
   activeCategory: Category | 'All';
@@ -22,6 +23,13 @@ export default function HostelBuzzHeader({
   activeCategory,
   onCategoryChange,
 }: HostelBuzzHeaderProps) {
+  const router = useRouter();
+
+  const handleSignOut = () => {
+    localStorage.removeItem('isLoggedIn');
+    router.replace('/login');
+  };
+
   return (
     <header className="space-y-4 md:space-y-6">
       <div className="flex items-center justify-between">
@@ -33,10 +41,16 @@ export default function HostelBuzzHeader({
             HostelBuzz
           </h1>
         </div>
-        <Button variant="ghost" size="icon" className="rounded-full">
-          <Bell className="h-6 w-6" />
-          <span className="sr-only">Notifications</span>
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="ghost" size="icon" className="rounded-full">
+            <Bell className="h-6 w-6" />
+            <span className="sr-only">Notifications</span>
+          </Button>
+          <Button variant="ghost" size="icon" className="rounded-full" onClick={handleSignOut}>
+            <LogOut className="h-6 w-6" />
+            <span className="sr-only">Sign Out</span>
+          </Button>
+        </div>
       </div>
       <Tabs value={activeCategory} onValueChange={onCategoryChange} className="w-full">
         <TabsList className="grid w-full grid-cols-5 bg-primary/20">
