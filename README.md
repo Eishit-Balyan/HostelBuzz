@@ -1,5 +1,1 @@
-# Firebase Studio
-
-This is a NextJS starter in Firebase Studio.
-
-To get started, take a look at src/app/page.tsx.
+A community-powered hostel info board, where students can post real-time alerts (laundry closed, new menu, cafe special, Wi-Fi down, etc.), and others can upvote/confirm or report false alerts. Think of it like “Reddit meets college notice board,” but focused and verified by peers.
